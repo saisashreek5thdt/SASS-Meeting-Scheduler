@@ -8,6 +8,7 @@ export default function MeetingForm() {
     phone: "",
     date: "",
     time: "",
+    meetLink: "",
   });
 
   const handleChange = (e) => {
@@ -21,6 +22,7 @@ export default function MeetingForm() {
       phone: "",
       date: "",
       time: "",
+      meetLink: "",
     });
   };
 
@@ -94,6 +96,15 @@ export default function MeetingForm() {
         onChange={handleChange}
         required
         className="w-full p-2 border rounded"
+      />
+      <input
+        type="text"
+        name="meetLink"
+        value={form.meetLink}
+        onChange={handleChange}
+        placeholder="Add Your Meeting Link"
+        required
+        className="w-full p-2 border rounded" 
       />
 
       <button

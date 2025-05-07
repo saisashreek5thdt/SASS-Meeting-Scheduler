@@ -12,9 +12,9 @@ export async function POST(req) {
     });
   }
 
-  const { name, email, phone, date, time } = body;
+  const { name, email, phone, date, time, meetLink } = body;
 
-  if (!name || !email || !phone || !date || !time) {
+  if (!name || !email || !phone || !date || !time || !meetLink) {
     return new Response(
       JSON.stringify({ message: "Missing required fields" }),
       { status: 400, headers: { "Content-Type": "application/json" } }
@@ -58,7 +58,7 @@ export async function POST(req) {
 
   const event = {
     summary: `Meeting with ${name}`,
-    description: `Phone: ${phone}`,
+    description: `Phone: ${phone} \n MeetingLink: ${meetLink}`,
     start: {
       dateTime: startDateTime.toISOString(),
       timeZone: "Asia/Kolkata",
@@ -66,6 +66,9 @@ export async function POST(req) {
     end: {
       dateTime: endDateTime.toISOString(),
       timeZone: "Asia/Kolkata",
+    },
+    link: {
+      MeetingLink: `${meetLink}`,
     },
     attendees: [{ email }, { email: process.env.GOOGLE_EMAIL_ID }],
     reminders: {
@@ -76,7 +79,7 @@ export async function POST(req) {
       ],
     },
   };
-
+  console.log(event);
   try {
     const response = await calendar.events.insert({
       calendarId: "primary",
